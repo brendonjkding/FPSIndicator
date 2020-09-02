@@ -1,0 +1,9 @@
+Package: com.brend0n.unityfpsindicator
+Name: UnityFPSIndicator
+Depends: mobilesubstrate,applist,org.thebigboss.libcolorpicker
+Version: 0.0.1~b1
+Architecture: iphoneos-arm
+Description: show real-time fps of unity games
+Maintainer: Brend0n <brendonjkding@126.com>
+Author: Brend0n <brendonjkding@126.com>
+Section: Tweaks

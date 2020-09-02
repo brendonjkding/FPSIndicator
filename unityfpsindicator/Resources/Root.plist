@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>开关</string>
+			<key>footerText</key>
+			<string>注：如果开启了变速软件，则帧数会显示为 实际帧数除以实际变速倍数</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.brend0n.unityfpsindicator</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>label</key>
+			<string>开关</string>
+			<key>PostNotification</key>
+			<string>com.brend0n.unityfpsindicator/loadPref</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>选择开启的游戏</string>
+			<key>action</key>
+			<string>selectApp</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>PFSimpleLiteColorCell</string>
+			<key>libcolorpicker</key>
+			<dict>
+				<key>defaults</key>
+				<string>com.brend0n.unityfpsindicator</string>
+				<key>key</key>
+				<string>color</string>
+				<key>fallback</key>
+				<string>#ffff00</string>
+				<key>alpha</key>
+				<true/>
+				<key>PostNotification</key>
+				<string>com.brend0n.unityfpsindicator/loadPref</string>
+			</dict>
+			<key>label</key>
+			<string>文字颜色</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>UnityFPSIndicator</string>
+</dict>
+</plist>
