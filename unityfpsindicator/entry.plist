@@ -15,7 +15,7 @@
 		<key>isController</key>
 		<true/>
 		<key>label</key>
-		<string>UnityFPSIndicator</string>
+		<string>FPSIndicator</string>
 	</dict>
 </dict>
 </plist>

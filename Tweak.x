@@ -3,11 +3,21 @@
 #import <notify.h>
 #import <readmem/readmem.h>
 #import <libcolorpicker/libcolorpicker.h>
+#import <objc/runtime.h>
+@import MetalKit;
+
 extern intptr_t _dyld_get_image_vmaddr_slide(uint32_t image_index);
+
+enum FPSMode{
+	kModePerFrame,
+	kModeAverage,
+	kModePerSecond
+};
 
 BOOL enabled;
 uint64_t main_address;
 long main_size;
+enum FPSMode fpsMode;
 
 long aslr;
 dispatch_source_t _timer;
@@ -18,6 +28,7 @@ BOOL loadPref(){
 	NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.brend0n.unityfpsindicator.plist"];
 	if(!prefs) prefs=[NSMutableDictionary new];
 	enabled=prefs[@"enabled"]?[prefs[@"enabled"] boolValue]:YES;
+	fpsMode=prefs[@"fpsMode"]?[prefs[@"fpsMode"] intValue]:0;
 
 	NSString *colorString = prefs?(prefs[@"color"]?:@"#ffff00"):@"#ffff00"; 
     UIColor *color = LCPParseColorString(colorString, nil);
@@ -95,24 +106,37 @@ static inline uint64_t get_add_value(uint32_t ins){
 //end
 
 static float (*orig_getDeltaTime)(void)=0;
-// static float mygetDeltaTime(void){
-// 	// NSLog(@"orig_getDeltaTime called");
-// 	float ret=orig_getDeltaTime();
-// 	return ret;
-// }
 
+double FPSPerSecond = 0;
+double FPSPerFrame =0;
+double FPSavg = 0;
 
 void start(){
 	_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), (1.0/5.0) * NSEC_PER_SEC, 0);
 
     dispatch_source_set_event_handler(_timer, ^{
-    	// NSLog(@"???");
-    	double delteTime=orig_getDeltaTime();
-    	double fps=1.0/delteTime;
-    	NSLog(@"%lf %lf",fps,delteTime);
-    	[fpsLabel setText:[NSString stringWithFormat:@"%.2lf",fps]];
-    	});
+    	if(orig_getDeltaTime){
+			double delteTime=orig_getDeltaTime();
+			FPSPerFrame=1.0/delteTime;
+		}
+    	switch(fpsMode){
+    		case kModePerFrame:
+		    	[fpsLabel setText:[NSString stringWithFormat:@"%.1lf",FPSPerFrame]];
+		    	break;
+		    case kModeAverage:
+		    	[fpsLabel setText:[NSString stringWithFormat:@"%.1lf",FPSavg]];
+		    	break;
+		    case kModePerSecond:
+		    	[fpsLabel setText:[NSString stringWithFormat:@"%.1lf",FPSPerSecond]];
+		    	break;
+		    default:
+		    	break;
+    	}
+#if DEBUG
+    	NSLog(@"%.1lf %.1lf %.1lf",FPSPerFrame,FPSavg,FPSPerSecond);
+#endif
+    });
     dispatch_resume(_timer); 
 }
 
@@ -129,7 +153,7 @@ long search_targetins(long ad_str){
 }
 long search_targetstr(){
 	for(long ad=main_address;ad<main_address+main_size;ad++){
-			static const char *t="UnityEngine.Time::get_deltaTime()";
+			static const char *t="UnityEngine.Time::get_unscaledDeltaTime()";
 			if(!strcmp((const char*)(ad),t)) return ad;
 	}
 	return false;
@@ -153,8 +177,9 @@ void search(){
 @end
 #define kFPSLabelWidth 50
 #define kFPSLabelHeight 20
-%hook UnityView
--(void)touchesBegan:(id)touches withEvent:(id)event{
+%group unity
+%hook UIWindow
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         CGRect bounds=[self bounds];
@@ -164,27 +189,128 @@ void search(){
         
         [self addSubview:fpsLabel];
         loadPref();
-        if(!orig_getDeltaTime) return;
         start();
     });
-	%orig;
+	return %orig;
 }
 %end
+%end//unity
+
+
+void a(){
+	static double FPS_temp = 0;
+	static double starttick = 0;
+	static double endtick = 0;
+	static double deltatick = 0;
+	static double frameend = 0;
+	static double framedelta = 0;
+	static double frameavg = 0;
+	
+	if (starttick == 0) starttick = CACurrentMediaTime()*1000.0;
+	endtick = CACurrentMediaTime()*1000.0;
+	framedelta = endtick - frameend;
+	frameavg = ((9*frameavg) + framedelta) / 10;
+	FPSavg = 1000.0f / (double)frameavg;
+	frameend = endtick;
+	
+	FPS_temp++;
+	deltatick = endtick - starttick;
+	if (deltatick >= 1000.0f) {
+		starttick = CACurrentMediaTime()*1000.0;
+		FPSPerSecond = FPS_temp - 1;
+		FPS_temp = 0;
+	}
+	
+	return;
+}
+%group gl
+%hook EAGLContext 
+- (BOOL)presentRenderbuffer:(NSUInteger)target{
+	BOOL ret=%orig;
+	a();
+#if DEBUG
+	static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+		NSLog(@"gl hooked");
+		});
+#endif
+	// NSLog(@"%f",FPSavg);
+	// [fpsLabel setText:[NSString stringWithFormat:@"%.2f",FPSavg]];
+	return ret;
+}
+%end
+%end//gl
+
+#pragma mark metal
+%group MTLCommandBufferClass
+%hook MTLCommandBufferClass
+- (void)presentDrawable:(id <MTLDrawable>)drawable{
+	// NSLog(@"UnityFPSIndicator presentDrawable");
+	a();
+	// NSLog(@"%f",FPSavg);
+	return %orig;
+}
+- (void)commit{
+	// NSLog(@"UnityFPSIndicator commit");
+	return %orig;
+}
+%end
+%end
+%group MTLCommandQueueClass
+%hook MTLCommandQueueClass
+- (id <MTLCommandBuffer>)commandBuffer{
+	// NSLog(@"commandBuffer");
+	id ret=%orig;
+	static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+		%init(MTLCommandBufferClass,MTLCommandBufferClass=[ret class]);
+		NSLog(@"metal hooked");
+		});
+	return ret;
+}
+%end
+%end
+%group MTLDeviceClass
+%hook MTLDeviceClass
+- (id )newCommandQueue{
+	// NSLog(@"newCommandQueue");
+	id ret=%orig;
+	static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+		%init(MTLCommandQueueClass,MTLCommandQueueClass=[ret class]);
+		});
+	return ret;
+}
+%end
+%end
+
+%group metal
+%hookf(id,MTLCreateSystemDefaultDevice){
+	// NSLog(@"");
+	id ret=%orig;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		%init(MTLDeviceClass,MTLDeviceClass=[ret class]);
+		});
+	return ret;
+}
+%end//metal
 %ctor{
 	if(!is_enabled_app()) return;
-	// if(!loadPref()) return;
-	// return;
-	NSLog(@"ctor: UnityFPSIndicator");
+	NSLog(@"ctor: UnityFPSIndicator1");
 
 	aslr=_dyld_get_image_vmaddr_slide(0);
-	NSLog(@"ASLR=0x%lx",aslr);
 	find_main_binary(mach_task_self(),&main_address);
 	main_size=get_image_size(main_address,mach_task_self());
 
+	%init(unity);
+	%init(gl);
+	%init(metal);
 	// MSHookFunction((void *)0x102c8ddf4+aslr, (void *)mygetDeltaTime, (void **)&orig_getDeltaTime);
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		// start();
-		
+
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
 	});
 	search();
 	int token = 0;

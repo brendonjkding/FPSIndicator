@@ -9,8 +9,6 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>开关</string>
-			<key>footerText</key>
-			<string>注：如果开启了变速软件，则帧数会显示为 实际帧数除以实际变速倍数</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -23,6 +21,40 @@
 			<string>enabled</string>
 			<key>label</key>
 			<string>开关</string>
+			<key>PostNotification</key>
+			<string>com.brend0n.unityfpsindicator/loadPref</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>注：如显示为0则暂不支持该方式</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.brend0n.unityfpsindicator</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>key</key>
+			<string>fpsMode</string>
+			<key>label</key>
+			<string>计算方法</string>
+			<key>validTitles</key>
+			<array>
+				<string>当前帧</string>
+				<string>平均</string>
+				<string>每秒</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
 			<key>PostNotification</key>
 			<string>com.brend0n.unityfpsindicator/loadPref</string>
 		</dict>
@@ -69,6 +101,6 @@
 		</dict>
 	</array>
 	<key>title</key>
-	<string>UnityFPSIndicator</string>
+	<string>FPSIndicator</string>
 </dict>
 </plist>
