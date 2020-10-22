@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>UnityFPSIndicator</string>
+	<string>FPSIndicator</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.brend0n.unityfpsindicator</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -19,6 +19,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSPrincipalClass</key>
-	<string>UnityFPSIndicatorRootListController</string>
+	<string>FPSIndicatorRootListController</string>
 </dict>
 </plist>

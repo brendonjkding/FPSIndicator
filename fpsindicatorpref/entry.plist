@@ -5,11 +5,11 @@
 	<key>entry</key>
 	<dict>
 		<key>bundle</key>
-		<string>UnityFPSIndicator</string>
+		<string>FPSIndicator</string>
 		<key>cell</key>
 		<string>PSLinkCell</string>
 		<key>detail</key>
-		<string>UnityFPSIndicatorRootListController</string>
+		<string>FPSIndicatorRootListController</string>
 		<key>icon</key>
 		<string>icon.png</string>
 		<key>isController</key>

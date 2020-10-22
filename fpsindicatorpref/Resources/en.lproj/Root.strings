@@ -1,0 +1,24 @@
+"CHOOSE_ENABLED_APP"="Choose Enabled Games";
+"ABOUT_AUTHOR"="Author";
+"ACTION_YES"="YES";
+"ACTION_NO"="NO";
+"ENABLED"="Enabled";
+"SELECT_ALL"="Select All";
+"DESELECT_ALL"="Deselect All";
+"CANCEL"="Cancel";
+"SELECT_DESELECT_ALL"="Select/Deselect All";
+
+"DESCRIPTION"="1. To show fps, wait for few seconds and touch anywhere after launching a game
+2. 0 fps means that game is no supported yet
+
+
+FPS - Frames Per Second (float) caculated from averaged frametime, refreshed with each new frame.
+
+PFPS - Pushed Frames Per Second (u8), it counts how many frames were actually pushed to display in second that passed.
+";
+
+"FPS_TYPE"="FPS type";
+"FPS"="FPS";
+"PFPS"="PFPS";
+
+"TEXT_COLOR"="Text Color";

@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>开关</string>
+			<string></string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -16,62 +16,70 @@
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
-			<string>com.brend0n.unityfpsindicator</string>
+			<string>com.brend0n.fpsindicator</string>
 			<key>key</key>
 			<string>enabled</string>
 			<key>label</key>
-			<string>开关</string>
+			<string>ENABLED</string>
 			<key>PostNotification</key>
-			<string>com.brend0n.unityfpsindicator/loadPref</string>
+			<string>com.brend0n.fpsindicator/loadPref</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>注：如显示为0则暂不支持该方式</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSLinkListCell</string>
-			<key>default</key>
-			<integer>0</integer>
-			<key>defaults</key>
-			<string>com.brend0n.unityfpsindicator</string>
-			<key>detail</key>
-			<string>PSListItemsController</string>
-			<key>key</key>
-			<string>fpsMode</string>
-			<key>label</key>
-			<string>计算方法</string>
-			<key>validTitles</key>
-			<array>
-				<string>当前帧</string>
-				<string>平均</string>
-				<string>每秒</string>
-			</array>
-			<key>validValues</key>
-			<array>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<key>PostNotification</key>
-			<string>com.brend0n.unityfpsindicator/loadPref</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
 			<string></string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>label</key>
-			<string>选择开启的游戏</string>
+			<string>CHOOSE_ENABLED_APP</string>
 			<key>action</key>
 			<string>selectApp</string>
 		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>defaults</key>
+			<string>com.brend0n.fpsindicator</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>key</key>
+			<string>fpsMode</string>
+			<key>label</key>
+			<string>FPS_TYPE</string>
+			<key>validTitles</key>
+			<array>
+				<string>FPS</string>
+				<string>PFPS</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>PostNotification</key>
+			<string>com.brend0n.fpsindicator/loadPref</string>
+		</dict>
+		
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>DESCRIPTION</string>
+		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -86,7 +94,7 @@
 			<key>libcolorpicker</key>
 			<dict>
 				<key>defaults</key>
-				<string>com.brend0n.unityfpsindicator</string>
+				<string>com.brend0n.fpsindicator</string>
 				<key>key</key>
 				<string>color</string>
 				<key>fallback</key>
@@ -94,10 +102,10 @@
 				<key>alpha</key>
 				<true/>
 				<key>PostNotification</key>
-				<string>com.brend0n.unityfpsindicator/loadPref</string>
+				<string>com.brend0n.fpsindicator/loadPref</string>
 			</dict>
 			<key>label</key>
-			<string>文字颜色</string>
+			<string>TEXT_COLOR</string>
 		</dict>
 	</array>
 	<key>title</key>

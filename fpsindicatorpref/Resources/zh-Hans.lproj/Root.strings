@@ -1,0 +1,18 @@
+"CHOOSE_ENABLED_APP"="选择开启的游戏";
+"ABOUT_AUTHOR"="作者";
+"ACTION_YES"="是";
+"ACTION_NO"="否";
+"ENABLED"="启用";
+"SELECT_ALL"="全选";
+"DESELECT_ALL"="全不选";
+"CANCEL"="取消";
+"SELECT_DESELECT_ALL"="全选/全不选";
+
+"DESCRIPTION"="1. 启动游戏后等几秒点击屏幕即显示帧数
+2.如显示为0则暂不支持";
+
+"FPS_TYPE"="计算方法";
+"FPS"="平均";
+"PFPS"="每秒";
+
+"TEXT_COLOR"="文字颜色";

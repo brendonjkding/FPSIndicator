@@ -1,12 +1,24 @@
 #import "BDInfoListController.h"
 #import <Preferences/PSSpecifier.h>
 
+@interface PSTableCell()
+-(id)iconImageView;
+@end
+
 @implementation BDInfoListController
 -(void)loadView{
 	[super loadView];
     self.navigationItem.title = @"Brend0n";
     
 }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+  id cell=[super tableView:tableView cellForRowAtIndexPath:indexPath];
+  UIImageView* imageView=[cell iconImageView];
+  imageView.layer.cornerRadius = 7.0;
+  imageView.layer.masksToBounds = YES;
+  return cell;
+}
+
 - (NSArray *)specifiers {
 	if (!_specifiers) {
 		_specifiers = [NSMutableArray arrayWithCapacity:5];
@@ -45,6 +57,7 @@
         [spec setProperty:@YES forKey:@"hasIcon"];
         [spec setProperty:[UIImage imageNamed:@"bilibili" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] forKey:@"iconImage"];
         [_specifiers addObject:spec];
+
         spec = [PSSpecifier preferenceSpecifierNamed:@"打赏支持"
                                               target:self
                                                  set:NULL
@@ -119,7 +132,7 @@
 }
 - (void)open_github{
   UIApplication *app = [UIApplication sharedApplication];
-  [app openURL:[NSURL URLWithString:@"https://github.com/brendonjkding"]];
+  [app openURL:[NSURL URLWithString:@"https://github.com/brendonjkding/FPSIndicator"]];
 }
 - (void)open_alipay{
   UIApplication *app = [UIApplication sharedApplication];

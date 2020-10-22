@@ -1,1 +1,1 @@
-idevicesyslog | grep -E 'UnityFPSIndicator' --color
+idevicesyslog | grep -E 'FPSIndicator' --color
