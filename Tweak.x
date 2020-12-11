@@ -71,9 +71,12 @@ static void startRefreshTimer(){
 	static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         CGRect bounds=[self bounds];
-        fpsLabel= [[UILabel alloc] initWithFrame:CGRectMake(bounds.size.width-kFPSLabelWidth-5.,0,kFPSLabelWidth,kFPSLabelHeight)];
+        CGFloat safeOffsetY=0;
+        if(@available(iOS 11.0,*)) safeOffsetY=self.safeAreaInsets.top;
+        fpsLabel= [[UILabel alloc] initWithFrame:CGRectMake(bounds.size.width-kFPSLabelWidth-5., safeOffsetY, kFPSLabelWidth, kFPSLabelHeight)];
         fpsLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:16];
         fpsLabel.textAlignment=NSTextAlignmentRight;
+        fpsLabel.userInteractionEnabled=NO;
         
         [self addSubview:fpsLabel];
         loadPref();

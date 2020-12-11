@@ -12,4 +12,6 @@
 #define NSLog(FORMAT, ...)
 #endif
 
+#import <UIKit/UIKit.h>
+
 #endif //__objc__
