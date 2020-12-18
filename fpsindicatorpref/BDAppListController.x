@@ -46,7 +46,7 @@
   
   self.searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
   self.searchController.searchResultsUpdater = self;
-  self.searchController.obscuresBackgroundDuringPresentation = NO;
+  if(@available(iOS 9.1, *)) self.searchController.obscuresBackgroundDuringPresentation = NO;
 
 
   if (@available(iOS 11.0, *)) {
@@ -128,6 +128,29 @@
         CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), notificationName, NULL, NULL, YES);
     }
 }
-
-
 @end
+
+%hook NSString
+%group localizedCaseInsensitiveContainsString
+%new
+-(BOOL)localizedStandardContainsString:(NSString*)string{
+  return [self localizedCaseInsensitiveContainsString:string];
+}
+%end //localizedCaseInsensitiveContainsString
+%group rangeOfString
+%new
+-(BOOL)localizedStandardContainsString:(NSString*)string{
+  return [self rangeOfString:string].length!=0;
+}
+%end //rangeOfString
+%end //NSString
+%ctor{
+  if(![@"" respondsToSelector:@selector(localizedStandardContainsString:)]){
+    if([@"" respondsToSelector:@selector(localizedCaseInsensitiveContainsString:)]){
+      %init(localizedCaseInsensitiveContainsString);
+    }
+    else{
+      %init(rangeOfString);
+    }
+  }
+}
