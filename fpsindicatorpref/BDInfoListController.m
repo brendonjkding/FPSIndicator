@@ -71,7 +71,7 @@
         [_specifiers addObject:spec];
         
 
-        spec = [PSSpecifier preferenceSpecifierNamed:@"添加我的软件源"
+        spec = [PSSpecifier preferenceSpecifierNamed:@"添加我的Cydia源"
                                               target:self
                                                  set:NULL
                                                  get:NULL

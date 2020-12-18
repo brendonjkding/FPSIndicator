@@ -129,28 +129,3 @@
     }
 }
 @end
-
-%hook NSString
-%group localizedCaseInsensitiveContainsString
-%new
--(BOOL)localizedStandardContainsString:(NSString*)string{
-  return [self localizedCaseInsensitiveContainsString:string];
-}
-%end //localizedCaseInsensitiveContainsString
-%group rangeOfString
-%new
--(BOOL)localizedStandardContainsString:(NSString*)string{
-  return [self rangeOfString:string].length!=0;
-}
-%end //rangeOfString
-%end //NSString
-%ctor{
-  if(![@"" respondsToSelector:@selector(localizedStandardContainsString:)]){
-    if([@"" respondsToSelector:@selector(localizedCaseInsensitiveContainsString:)]){
-      %init(localizedCaseInsensitiveContainsString);
-    }
-    else{
-      %init(rangeOfString);
-    }
-  }
-}
