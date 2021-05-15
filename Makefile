@@ -1,14 +1,15 @@
 ifdef SIMULATOR
-TARGET = simulator:clang:11.2:8.0
-ARCHS = x86_64
+export TARGET = simulator:clang:latest:8.0
 else
-TARGET = iphone:clang:11.2:7.0
+export TARGET = iphone:clang:latest:7.0
 	ifeq ($(debug),0)
-		ARCHS= armv7 arm64 arm64e
+		export ARCHS= armv7 arm64 arm64e
 	else
-		ARCHS= arm64 
+		export ARCHS= arm64
 	endif
 endif
+
+include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = FPSIndicator
 
@@ -18,7 +19,7 @@ FPSIndicator_LIBRARIES = colorpicker
 
 
 SUBPROJECTS += fpsindicatorpref
-include $(THEOS)/makefiles/common.mk
+
 include $(THEOS_MAKE_PATH)/tweak.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
