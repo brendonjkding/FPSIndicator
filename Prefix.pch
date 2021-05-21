@@ -13,5 +13,6 @@
 #endif
 
 #import <UIKit/UIKit.h>
+extern UIApplication* UIApp;
 
 #endif //__objc__
