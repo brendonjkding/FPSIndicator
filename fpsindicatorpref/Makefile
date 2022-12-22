@@ -1,5 +1,3 @@
-include $(THEOS)/makefiles/common.mk
-
 BUNDLE_NAME = FPSIndicator
 
 FPSIndicator_FILES = FPSIndicatorRootListController.m BDInfoListController.m
@@ -10,6 +8,7 @@ FPSIndicator_CFLAGS = -fobjc-arc -Wno-error=unused-variable -Wno-error=unused-fu
 FPSIndicator_LIBRARIES = applist
 FPSIndicator_EXTRA_FRAMEWORKS += AltList
 
+include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/bundle.mk
 
 internal-stage::
