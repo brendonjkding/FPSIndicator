@@ -1,6 +1,6 @@
 Package: com.brend0n.unityfpsindicator
 Name: FPSIndicator 
-Depends: mobilesubstrate,applist,org.thebigboss.libcolorpicker
+Depends: mobilesubstrate, com.opa334.altlist, org.thebigboss.libcolorpicker
 Version: 0.0.3r6
 Architecture: iphoneos-arm
 Description: real-time fps indicator for games

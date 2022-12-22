@@ -1,6 +1,5 @@
 #import "FPSIndicatorRootListController.h"
 #import "BDInfoListController.h"
-#import "BDAppListController.h"
 #import <Preferences/PSSpecifier.h>
 
 @implementation FPSIndicatorRootListController
@@ -57,10 +56,4 @@
   self.navigationItem.backBarButtonItem = backItem; 
   [self.navigationController pushViewController:[[BDInfoListController alloc] init] animated:TRUE];
 }
--(void)selectApp{
-  UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-  self.navigationItem.backBarButtonItem = backItem; 
-  [self.navigationController pushViewController:[[BDAppListController alloc] initWithDefaults:@"com.brend0n.fpsindicator" andKey:@"apps"] animated:TRUE];
-}
-
 @end

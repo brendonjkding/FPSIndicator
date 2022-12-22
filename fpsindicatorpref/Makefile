@@ -2,12 +2,13 @@ include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = FPSIndicator
 
-FPSIndicator_FILES = FPSIndicatorRootListController.m BDInfoListController.m BDAppListController.m LowiOSVersionCompatibility.x
+FPSIndicator_FILES = FPSIndicatorRootListController.m BDInfoListController.m
 FPSIndicator_INSTALL_PATH = /Library/PreferenceBundles
 FPSIndicator_FRAMEWORKS = UIKit
 FPSIndicator_PRIVATE_FRAMEWORKS = Preferences
 FPSIndicator_CFLAGS = -fobjc-arc -Wno-error=unused-variable -Wno-error=unused-function -include Prefix.pch
 FPSIndicator_LIBRARIES = applist
+FPSIndicator_EXTRA_FRAMEWORKS += AltList
 
 include $(THEOS_MAKE_PATH)/bundle.mk
 
