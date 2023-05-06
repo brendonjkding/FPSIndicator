@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ -f /User/Library/Preferences/com.brend0n.unityfpsindicator.plist ]; then
 	mv /User/Library/Preferences/com.brend0n.unityfpsindicator.plist /User/Library/Preferences/com.brend0n.fpsindicator.plist
 fi
