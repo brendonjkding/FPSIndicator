@@ -13,8 +13,8 @@ TWEAK_NAME = FPSIndicator
 
 FPSIndicator_FILES = Tweak.x
 FPSIndicator_CFLAGS = -fobjc-arc -Wno-error=unused-variable -Wno-error=unused-function -include Prefix.pch
-FPSIndicator_LIBRARIES = colorpicker
 
+FPSIndicator_FILES += libcolorpicker/libcolorpicker.mm
 
 SUBPROJECTS += fpsindicatorpref
 

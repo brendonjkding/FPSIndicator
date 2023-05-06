@@ -1,0 +1,3 @@
+[submodule "libcolorpicker"]
+	path = libcolorpicker
+	url = https://github.com/brendonjkding/libcolorpicker.git

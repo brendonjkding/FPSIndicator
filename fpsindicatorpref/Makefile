@@ -7,6 +7,8 @@ FPSIndicator_PRIVATE_FRAMEWORKS = Preferences
 FPSIndicator_CFLAGS = -fobjc-arc -Wno-error=unused-variable -Wno-error=unused-function -include Prefix.pch
 FPSIndicator_EXTRA_FRAMEWORKS += AltList
 
+FPSIndicator_FILES += $(wildcard ../libcolorpicker/*.m) $(wildcard ../libcolorpicker/*.mm) $(wildcard ../libcolorpicker/*.xm)
+
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/bundle.mk
 
